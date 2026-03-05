@@ -1,5 +1,26 @@
-name: Kabumini-Main-Check
+name: StockCheck-Action
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 7 * * *' # 日本時間 16:30（UTC 07:30）に実行
+    - cron: '30 7 * * *' # 日本時間 16:30に実行
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: pip install requests pandas yfinance
+      
+      - name: Run script
+        env:
+          LINE_ACCESS_TOKEN: ${{ secrets.LINE_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+        run: python main.py
