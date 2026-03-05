@@ -1,0 +1,5 @@
+name: Kabumini-Main-Check
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 7 * * *' # 日本時間 16:30（UTC 07:30）に実行
